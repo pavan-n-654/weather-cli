@@ -66,3 +66,6 @@ class User:
         users = self.db.findAll()
         for user in users:
             print(user['username'])
+
+    def __del__(self):
+        del self.db
