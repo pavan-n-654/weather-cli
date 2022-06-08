@@ -25,6 +25,13 @@ class User:
         if not self.isAdmin:
             raise Exception('You are not an admin')
 
+        if username == '':
+            print('Username cannot be empty')
+            return False
+        if password == '':
+            print('Password cannot be empty')
+            return False
+
         if self.db.findUser(username):
             return False
         else:
