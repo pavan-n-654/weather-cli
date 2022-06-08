@@ -7,7 +7,7 @@ class DB:
         Initializes the DB class
         :return: None
         """
-        self.conn = pymongo.MongoClient(os.environ.get('DB_HOST', 'localhost'), os.environ.get('DB_PORT', 27017))
+        self.conn = pymongo.MongoClient(os.environ.get('DB_HOST', 'localhost'), int(os.environ.get('DB_PORT', 27017)))
         self.db = self.conn[os.environ.get('DB_NAME', 'test')]
         self.collection = self.db[os.environ.get('DB_COLLECTION', 'test')]
 
@@ -25,7 +25,7 @@ class DB:
         Finds all Users in the collection
         :return: A list of all users
         """
-        return self.collection.find()
+        return list(self.collection.find())
 
     def findUser(self, username):
         """
