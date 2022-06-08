@@ -15,7 +15,7 @@ class User:
         userdata = self.db.findUser(self.username)
         if userdata and self.hash_password(password) == userdata['password']:
             self.loginstatus = True
-            if userdata['isAdmin']:
+            if userdata['role'] == 'admin':
                 self.isAdmin = True
             return True
         else:
