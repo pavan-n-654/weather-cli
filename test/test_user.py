@@ -27,7 +27,7 @@ class TestUser(unittest.TestCase):
         self.assertFalse(self.user3.login('password'))
 
     def test06_add_user_failure_no_password(self):
-        self.assertFalse(self.user1.addUser('user', ''))
+        self.assertFalse(self.user1.addUser('user2', ''))
 
     def test07_add_user_failure_no_username(self):
         self.assertFalse(self.user1.addUser('', 'password'))
