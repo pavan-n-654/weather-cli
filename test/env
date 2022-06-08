@@ -1,0 +1,7 @@
+# Database
+DB_HOST=localhost           # host for running MongoDb in Docker, use `localhost` for using MongoDb in the host system
+DB_PORT=27017             # Default MongoDb port
+DB_NAME=test        # Database name
+DB_COLLECTION=test       # Collection name
+ADMIN_USER=admin          # Admin user name
+ADMIN_PASSWORD=password   # Admin user password
