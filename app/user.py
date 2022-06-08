@@ -12,6 +12,9 @@ class User:
         return hashlib.sha256(string.encode('utf-8')).hexdigest()
 
     def login(self, password):
+        if self.loginstatus:
+            print('You are already logged in')
+            return False
         userdata = self.db.findUser(self.username)
         if userdata and self.hash_password(password) == userdata['password']:
             self.loginstatus = True
