@@ -6,14 +6,16 @@ sys.path.append(root_dir)
 from app.user import User
 
 class TestUser(unittest.TestCase):
-    user1 = User('admin')
-    user2 = User('user')
-    user3 = User('notAuser')
+    def setUp(self): 
+        self.user1 = User('admin')
+        self.user2 = User('user')
+        self.user3 = User('notAuser')
 
     def test01_admin_login_success(self):
         self.assertTrue(self.user1.login('password'))
 
     def test02_add_user_success(self):
+        self.user1.login('password')
         self.user1.addUser('user', 'password')
         self.assertTrue(self.user1.db.findUser('user').get('username', 'test')=='user')
 
@@ -27,24 +29,31 @@ class TestUser(unittest.TestCase):
         self.assertFalse(self.user3.login('password'))
 
     def test06_add_user_failure_no_password(self):
+        self.user1.login('password')
         self.assertFalse(self.user1.addUser('user2', ''))
 
     def test07_add_user_failure_no_username(self):
+        self.user1.login('password')
         self.assertFalse(self.user1.addUser('', 'password'))
 
     def test08_add_user_failure_no_username_no_password(self):
+        self.user1.login('password')
         self.assertFalse(self.user1.addUser('', ''))
 
     def test09_add_user_failure_existing_username(self):
+        self.user1.login('password')
         self.assertFalse(self.user1.addUser('admin', 'password'))
 
     def test10_find_single_user_success(self):
+        self.user1.login('password')
         self.assertTrue(self.user1.db.findUser('admin')['username']=='admin')
 
     def test11_find_single_user_failure(self):
+        self.user1.login('password')
         self.assertFalse(self.user1.db.findUser('notAuser'))
 
     def test12_find_all_users_success(self):
+        self.user1.login('password')
         # only admin,user should be in the list
         self.assertTrue(len(self.user1.db.findAll())==2)
 
@@ -55,10 +64,12 @@ class TestUser(unittest.TestCase):
         del temp_user
 
     def test14_delete_user_success(self):
+        self.user1.login('password')
         self.user1.deleteUser('user')
         self.assertFalse(self.user1.db.findUser('user'))
 
     def test15_delete_user_failure(self):
+        self.user1.login('password')
         self.assertFalse(self.user1.deleteUser('notAuser'))
 
 def suite():
@@ -68,3 +79,4 @@ def suite():
 
 if __name__ == '__main__':
     unittest.main(defaultTest='suite')
+    exit(0)
