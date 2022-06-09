@@ -1,13 +1,19 @@
 import os
+from datetime import datetime
+from datetime import timezone
 import sys
+import requests
 from user import User
 from db import DB
 import dotenv
 import re
-
-#([a-zA-z]+)|(((\d+\.\d+)|(\d+)) ((\d+\.\d+)|(\d+)))
+import json
 
 dotenv.load_dotenv(".env")
+
+city_file = open("city.list.json", "r")
+city_data = json.loads(city_file.read())
+city_file.close()
 
 def print_intro():
     print(" __      __                  __   .__                        _________  .__   .__  ",
@@ -17,6 +23,58 @@ def print_intro():
           "  \\__/\\  /   \\___  >(____  /|__|  |___|  / \\___  >|__|        \\______  /|____/|__| ",
           "       \\/        \\/      \\/            \\/      \\/                    \\/            ", sep="\n")
     print("\t==========================")
+
+def get_coords(query):
+    pattern = r'([a-zA-z]+)|(((\d+\.\d+)|(\d+)) ((\d+\.\d+)|(\d+)))'
+    match = re.match(pattern, query)
+    if match:
+        if match.group(1) is not None:
+            name = match.group(1)
+            for city in city_data:
+                if city['name'] == name:
+                    return city['coord']['lat'], city['coord']['lon']
+            return match.group(1)
+        else:
+            return list(map(float, match.group(2).split()))
+    else:
+        return None
+
+def match_date(data, date):
+    for day in data['daily']:
+        day_timestamp = datetime.fromtimestamp(day['dt'], timezone.utc).date()
+        if day_timestamp == date:
+            return day
+    return None
+
+def call_api():
+    query = input("\tEnter Location name/[latitude longitude]: ")
+    date_str = input("\tEnter date in YYYY-MM-DD format: ")
+    date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
+    cords = get_coords(query)
+    if cords is None:
+        print("\tInvalid location")
+        return
+    lat, lon = cords
+    api_key = os.environ.get("API_KEY")
+    url = os.environ.get("API_URL").format(lat, lon, api_key)
+    print("\tFetching data...")
+    res = requests.get(url)
+    if res.status_code == 200:
+        data = res.json()
+        weather_data = match_date(data, date_obj)
+        if weather_data is None:
+            print("\tDate exceedes the range of data")
+            return
+        print("\tHumidity: {}".format(weather_data['humidity']))
+        print("\tPressure: {}".format(weather_data['pressure']))
+        temp = weather_data['temp']
+        print("\tAverage temperature: {}K".format((temp['min'] + temp['max']) / 2))
+        print("\tWind Speed: {}".format(weather_data['wind_speed']))
+        print("\tWind Direction: {}".format(weather_data['wind_deg']))
+        print("\tUV Index: {}".format(weather_data['uvi']))
+    else:
+        print("\tError fetching data")
+
 
 def print_menu(adminMenu):
     print("\tMain Menu")
@@ -39,7 +97,7 @@ def run_choice(user):
     if choice == "1":
         print_menu(user.isAdmin)
     elif choice == "2":
-        pass
+        call_api()
     else:
         if user.isAdmin:
             if choice == "3":
