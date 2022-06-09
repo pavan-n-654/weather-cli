@@ -62,6 +62,9 @@ class User:
         if username == '':
             print('Username cannot be empty')
             return False
+        if self.isAdmin and not self.db.findUser(username):
+            print('User does not exist')
+            return False
 
         if self.loginstatus:
             self.db.updateUser(username, {'password': self.hash_password(newpassword)})
