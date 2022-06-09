@@ -1,0 +1,13 @@
+# Database
+DB_HOST=localhost           # host for running MongoDb in Docker, use `localhost` for using MongoDb in the host system
+DB_PORT=27017             # Default MongoDb port
+DB_NAME=WeatherApp        # Database name
+DB_COLLECTION=Users       # Collection name
+ADMIN_USER=admin          # Admin user name
+ADMIN_PASSWORD=password   # Admin user password
+
+# Api
+API_KEY="YOUR api key here"         # API key
+# Onecall 3.0 is used here specifically for UV index, which is not available in the free version of the API
+# Note: changes has to be made in the code to use different API URL
+API_URL="https://api.openweathermap.org/data/2.5/onecall?lat={}&lon={}&exclude=current,hourly,minutely,alerts&appid={}"
