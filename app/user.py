@@ -1,4 +1,4 @@
-from app.db import DB
+from db import DB
 import hashlib
 
 class User:
@@ -74,8 +74,9 @@ class User:
             raise Exception('You are not an admin')
 
         users = self.db.findAll()
+        print("\tAll users:")
         for user in users:
-            print(user['username'])
+            print("\t\t",user['username'])
 
     def __del__(self):
         del self.db
