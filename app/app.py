@@ -16,10 +16,10 @@ city_data = json.loads(city_file.read())
 city_file.close()
 
 def print_intro():
-    print(" __      __                  __   .__                        _________  .__   .__  ",
+    print(" __      __                  __    __                        _________   __    __  ",
           "/  \\    /  \\  ____  _____  _/  |_ |  |__    ____ _______     \\_   ___ \\ |  |  |__| ",
-          "\\   \\/\\/   /_/ __ \\ \\__  \\ \\   __\\|  |  \\ _/ __ \\_  __ \\    /    \\  \\/ |  |  |  | ",
-          " \\        / \\  ___/  / __ \\_|  |  |   Y  \\  ___/ |  | \\/    \\     \\____|  |__|  | ",
+          "\\   \\/\\/   /_/ __ \\ \\__  \\ \\   __\\|  |  \\ _/ __ \\_  __ \\    /    \\  \\/  |  |  |  | ",
+          " \\        / \\  ___/  / __ \\_|  |  |   Y  \\  ___/ |  | \\/    \\     \\____ |  |__|  | ",
           "  \\__/\\  /   \\___  >(____  /|__|  |___|  / \\___  >|__|        \\______  /|____/|__| ",
           "       \\/        \\/      \\/            \\/      \\/                    \\/            ", sep="\n")
     print("\t==========================")
@@ -88,8 +88,8 @@ def print_menu(adminMenu):
         print("\t6. Change user password")
         print("\t7. Logout")
     else:
-        print("\t 3. Change password")
-        print("\t 4. Logout")
+        print("\t3. Change password")
+        print("\t4. Logout")
 
 def run_choice(user):
     choice = input("\n\tEnter your choice: ")
