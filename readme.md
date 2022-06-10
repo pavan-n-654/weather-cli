@@ -39,6 +39,10 @@
 - Setup docker
   - `cd weather-cli/app`
   - `source script.sh`
+  - Setup environment variables
+  - `cp env_sample .env`
+  - make appropriate changes in .env
+  - change `DB_HOST` to `mongo` and provide ur `API_KEY`
 - Build and run the application
   - `run_db`
   - `build_app`
