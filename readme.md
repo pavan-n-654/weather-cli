@@ -51,4 +51,4 @@
     - inside docker container shell `python setup.py`
   - In the `run_app` executed terminal the app will be waiting for user input
 
-> Checkout [report.md](https://github.com/pavan-n-654/weather-cli/blob/main/report.md)
+> Checkout [report.md](/report.md)
