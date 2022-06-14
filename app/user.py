@@ -1,3 +1,7 @@
+import os
+import sys
+app_dir = os.path.dirname(__file__)
+sys.path.append(app_dir)
 from db import DB
 import hashlib
 

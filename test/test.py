@@ -4,6 +4,7 @@ import sys
 sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 import test_user
 import test_db
+import test_app
 import pymongo
 from hashlib import sha256
 
@@ -17,7 +18,8 @@ collection.insert_one({"username": "admin", "password": sha256("password".encode
 
 AllSuite = unittest.TestSuite([
     test_db.suite(),
-    test_user.suite()
+    test_user.suite(),
+    test_app.suite()
     ])
 unittest.TextTestRunner(verbosity=2).run(AllSuite)
 

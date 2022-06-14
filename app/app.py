@@ -2,6 +2,8 @@ import os
 from datetime import datetime
 from datetime import timezone
 import sys
+app_dir = os.path.dirname(__file__)
+sys.path.append(app_dir)
 import requests
 from user import User
 from db import DB
@@ -11,7 +13,7 @@ import json
 
 dotenv.load_dotenv(".env")
 
-city_file = open("city.list.json", "r")
+city_file = open("/home/pavan/gitclones/weather-cli/app/city.list.json", "r")
 city_data = json.loads(city_file.read())
 city_file.close()
 
