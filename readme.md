@@ -14,7 +14,7 @@
 - python 3.x
 - mongodb
 - optional
-  - docker, docker-compose
+  - docker
 
 ## Demo
 
